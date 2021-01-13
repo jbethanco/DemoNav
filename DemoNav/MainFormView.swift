@@ -78,7 +78,9 @@ struct MainFormView : View {
                         DatePicker("Land Time", selection: $datePickerDown, displayedComponents: [.hourAndMinute])
                             .environment(\.locale, .init(identifier: "en_GB"))
                     }
-                }.navigationBarItems(trailing: EditButton())
+                }
+                .navigationBarItems(trailing: EditButton())
+              
             
             case .shortForm:
                 Form {
@@ -152,8 +154,23 @@ struct AllFlightCards: View{
                 }.onDelete(perform: delete)
             }
         }.navigationBarTitle(Text("Flights"))
-        .navigationBarItems(trailing: EditButton())
+        .navigationBarItems(leading: EditButton(),
+                            trailing: Button {
+                                add()
+                     
+                            }label: {
+                                HStack{
+                                    Spacer()
+                                    Image(systemName: "plus")
+                                }
+                       
+        })
+       // .navigationBarItems(trailing: EditButton())
      
+    }
+    func add(){
+        let flight = Flight(missionNumber: "", missionSymbol: "", fromICAO: "", toICAO: "")
+        flights.append(flight)
     }
     func delete(at offsets: IndexSet) {
        flights.remove(atOffsets: offsets)
@@ -187,6 +204,8 @@ struct FlightCard: View {
         }
          
     }
+    
+   
 }
 
 struct AllPersonCards: View {
@@ -207,11 +226,25 @@ struct AllPersonCards: View {
             }
             
             .navigationBarTitle(Text("Aircrew"))
-            .navigationBarItems(trailing: EditButton())
+           // .navigationBarItems(trailing: EditButton())
+            .navigationBarItems(leading: EditButton(),
+                                trailing: Button {
+                                    //print("do stuff")
+                         add()
+                                }label: {
+                                    HStack{
+                                        Spacer()
+                                        Image(systemName: "plus")
+                                    }
+                           
+            })
         }
         
     }
-    
+    func add(){
+        let aircrewMember = AircrewMember(flyingOrg: "", ssan: "", lastName: "")
+        members.append(aircrewMember)
+    }
     func delete(at offsets: IndexSet) {
        members.remove(atOffsets: offsets)
    }
