@@ -19,7 +19,8 @@ struct MainFormView : View {
     @State var remarks:     String = ""
     @State var flights:     [Flight] = [Flight]()
     @State var aircrew:     [AircrewMember] = [AircrewMember]()
-    
+    @State var datePicker =  Date()
+    @State var datePickerDown =  Date()
     var body: some View {
         
         VStack {
@@ -44,6 +45,7 @@ struct MainFormView : View {
                             Text("From ICAO")
                                 .padding(.trailing, 90)
                             Text("To ICAO")
+                       
                         }.font(.headline)
                         List{
                             ForEach(flights, id: \.self) { flight in
@@ -71,6 +73,10 @@ struct MainFormView : View {
                     }
                     Section(header: Text("Remarks").font(.headline)) {
                         TextField("REMARKS", text:$remarks)
+                        DatePicker("Take Off Time", selection: $datePicker, displayedComponents: [.hourAndMinute])
+                            .environment(\.locale, .init(identifier: "en_GB"))
+                        DatePicker("Land Time", selection: $datePickerDown, displayedComponents: [.hourAndMinute])
+                            .environment(\.locale, .init(identifier: "en_GB"))
                     }
                 }.navigationBarItems(trailing: EditButton())
             
@@ -100,6 +106,11 @@ struct MainFormView : View {
                     
                     Section(header: Text("Remarks").font(.headline)) {
                         TextField("REMARKS", text:$remarks)
+                        DatePicker("Take Off Time", selection: $datePicker, displayedComponents: [.hourAndMinute])
+                            .environment(\.locale, .init(identifier: "en_GB"))
+                        DatePicker("Land Time", selection: $datePickerDown, displayedComponents: [.hourAndMinute])
+                            .environment(\.locale, .init(identifier: "en_GB"))
+
                     }
                     .navigationBarTitle(Text("Current Form"))
                 }
